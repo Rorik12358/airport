@@ -18,26 +18,6 @@ public class Main {
     private static List<Flight> flights = new LinkedList<>();
     private static List<Ticket> tickets = new LinkedList<>();
 
-    private final static String[] COLUMNS_FOR_TABLE_FLIGHTS = {"FLIGHT TYPE", "TIME",
-            "FLIGHT NUMBER", "CITY", "TERMINAL", "STATUS", "GATE"};
-    private static String[][] rowsForTableFlightsDeparture;
-    private static String[][] rowsForTableFlightsArrival;
-
-    public static String[][] getRowsForTableFlightsArrival() {
-        return rowsForTableFlightsArrival;
-    }
-    public static void setRowsForTableFlightsArrival(String[][] rowsForTableFlightsArrival) {
-        Main.rowsForTableFlightsArrival = rowsForTableFlightsArrival;
-    }
-    public static String[] getColumnsForTableFlights() {
-        return COLUMNS_FOR_TABLE_FLIGHTS;
-    }
-    public static String[][] getRowsForTableFlightsDeparture() {
-        return rowsForTableFlightsDeparture;
-    }
-    public static void setRowsForTableFlightsDeparture(String[][] rowsForTableFlightsDeparture) {
-        Main.rowsForTableFlightsDeparture = rowsForTableFlightsDeparture;
-    }
     public static List<Passenger> getPassengers() {
         return passengers;
     }

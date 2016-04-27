@@ -3,6 +3,7 @@ package GUI;
 import BL.Flight;
 import BL.FlightsButtonActionListener;
 import BL.PassengersButtonActionListener;
+import BL.TableMaker;
 import net.miginfocom.swing.MigLayout;
 
 import javax.swing.*;
@@ -15,32 +16,38 @@ public class UserInerface implements Runnable {
     private static JButton flightsButton = new JButton("Flights Board");
     private static JButton ticketsButton = new JButton("Prices of ticketsButton");
     private static JButton passengersButton = new JButton("Passengers");
+    private static JComboBox comboBoxFlights;
 
     private static JFrame frame;
     private static JPanel panel;
-
-    public static JFrame getFrame() {
-        return frame;
-    }
-
-    public static JPanel getPanel() {
-        return panel;
-    }
-
     private static JPanel panelView;
     private static JPanel panelFlightsVew;
     private static JTable flightsArrivalTable;
     private static JTable flightsDepartureTable;
-
+    private static JTable selectedFlight;
     private static JPanel panelPassengersView;
 
+    public static JComboBox getComboBoxFlights() {
+        return comboBoxFlights;
+    }
+    public static JFrame getFrame() {
+        return frame;
+    }
+    public static JPanel getPanel() {
+        return panel;
+    }
+    public static JTable getSelectedFlight() {
+        return selectedFlight;
+    }
+    public static void setSelectedFlight(JTable selectedFlight) {
+        UserInerface.selectedFlight = selectedFlight;
+    }
     public static JTable getFlightsDepartureTable() {
         return flightsDepartureTable;
     }
     public static JTable getFlightsArrivalTable() {
         return flightsArrivalTable;
     }
-
     public static JPanel getPanelView() {
         return panelView;
     }
@@ -75,50 +82,20 @@ public class UserInerface implements Runnable {
         //Start creating Flight view
         panelFlightsVew = new JPanel(new MigLayout());
 
-        flightsArrivalTable = new JTable(Main.getRowsForTableFlightsArrival(),Main.getColumnsForTableFlights()){
-            @Override
-            public boolean isCellEditable(int row, int column) {
-                return false;
-            }
-        };
-        flightsArrivalTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
-        flightsArrivalTable.getColumnModel().getColumn(0).setPreferredWidth(90);
-        flightsArrivalTable.getColumnModel().getColumn(1).setPreferredWidth(170);
-        flightsArrivalTable.getColumnModel().getColumn(2).setPreferredWidth(120);
-        flightsArrivalTable.getColumnModel().getColumn(5).setPreferredWidth(90);
-        flightsArrivalTable.getColumnModel().getColumn(6).setPreferredWidth(40);
-        flightsArrivalTable.setPreferredScrollableViewportSize(new Dimension(500,100));
+        flightsArrivalTable = TableMaker.createFlightsArrivalTable();
         JScrollPane scrollPaneForArrivalFlight = new JScrollPane(flightsArrivalTable, ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
         panelFlightsVew.add(scrollPaneForArrivalFlight);
 
-        flightsDepartureTable = new JTable(Main.getRowsForTableFlightsDeparture(), Main.getColumnsForTableFlights()){
-            @Override
-            public boolean isCellEditable(int row, int column) {
-                return false;
-            }
-        };
-        flightsDepartureTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
-        flightsDepartureTable.getColumnModel().getColumn(0).setPreferredWidth(90);
-        flightsDepartureTable.getColumnModel().getColumn(1).setPreferredWidth(170);
-        flightsDepartureTable.getColumnModel().getColumn(2).setPreferredWidth(120);
-        flightsDepartureTable.getColumnModel().getColumn(5).setPreferredWidth(90);
-        flightsDepartureTable.getColumnModel().getColumn(6).setPreferredWidth(40);
-        flightsDepartureTable.setPreferredScrollableViewportSize(new Dimension(500,100));
+        flightsDepartureTable = TableMaker.createFlightsDepartureTable();
         JScrollPane scrollPaneForDepartureFlight = new JScrollPane(flightsDepartureTable, ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
         panelFlightsVew.add(scrollPaneForDepartureFlight, "wrap");
 
-        JComboBox comboBoxFlights = createComboBoxFlights();
-        panelFlightsVew.add(comboBoxFlights);
-        String[][] selectedFlight = new String[Main.getColumnsForTableFlights().length][];
-        Flight flight = null;
-        for(Flight fl : Main.getFlights()) {
-            if(fl.getFlightNumber().equals(comboBoxFlights.getSelectedItem().toString())){
-                flight = fl;
-            }
-        }
-        int i = 0;
-        selectedFlight[0][i++] = flight.getType().name();
-        //selectedFlight[0][i++] =
+        comboBoxFlights = createComboBoxFlights();
+        panelFlightsVew.add(comboBoxFlights,"wrap");
+
+        selectedFlight = TableMaker.createSelectedFlight();
+        JScrollPane scrollPaneForSelectedFlight = new JScrollPane(selectedFlight);
+        panelFlightsVew.add(scrollPaneForSelectedFlight,"span");
         //end of creating Flights view
 
         panelView = panelFlightsVew;
