@@ -1,32 +1,22 @@
 package resorses;
 
-import java.math.BigDecimal;
-import java.math.MathContext;
-import java.text.SimpleDateFormat;
-import java.util.*;
+import business_logic.CheckingInputInformation;
+
+import java.sql.SQLException;
 
 /**
  * Created by r2-d2 on 23.04.16.
  */
 public class M {
-    public static void main(String[] args) {
-        BigDecimal g = BigDecimal.valueOf(10.9);
-        BigDecimal h = new BigDecimal(11.11111111111);
-        BigDecimal b = g.multiply(h, MathContext.DECIMAL32);
-        System.out.println(b);
-        int i = 0;
-        System.out.println("FLGHT" + (i + 1));
-        Calendar calendar = Calendar.getInstance();
-        Date date = new Date();
-        calendar.setTime(date);
-        System.out.println(calendar);
-        Random random = new Random();
-        Date date2 = new Date();
-        SimpleDateFormat format = new SimpleDateFormat("dd-YYYY-MM 'at' HH:mm");
-        for(int in = 0; in < 10; in++){
-            Date nd = new Date(date2.getTime()+random.nextInt(1000000000));
-            System.out.println(format.format(nd));
-        }
+    public static void main(String[] args) throws SQLException, ClassNotFoundException {
+        System.out.println(CheckingInputInformation.isFlightTypeValid("ARRIVAL"));
+        System.out.println(CheckingInputInformation.isTimeValid("19.05.2016 at 9:00"));
+        System.out.println(CheckingInputInformation.isCityValid("Kiev"));
+        System.out.println(CheckingInputInformation.isTerminalValid("A"));
+        System.out.println(CheckingInputInformation.isStatusValid("DEPARTED_AT"));
+        System.out.println(CheckingInputInformation.isGateValid("2"));
+
+        //System.out.println(CheckingInputInformation.isPriceValid("1288.15"));
     }
 }
 

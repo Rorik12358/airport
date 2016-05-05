@@ -1,11 +1,8 @@
-package GUI;
+package user_interface;
 
-import BL.Flight;
-import BL.Passenger;
-import BL.TableMaker;
-import BL.Ticket;
-import DB.DBLoading;
-
+import business_logic.Flight;
+import business_logic.Passenger;
+import business_logic.Ticket;
 import java.sql.SQLException;
 import java.util.LinkedList;
 import java.util.List;
@@ -16,27 +13,28 @@ import java.util.List;
 public class Main {
     private static List<Passenger> passengers = new LinkedList<>();
     private static List<Flight> flights = new LinkedList<>();
-    private static List<Ticket> tickets = new LinkedList<>();
+    private static List<Passenger> selectedPassengers = new LinkedList<>();
+    private static List<Flight> selectedFlights = new LinkedList<>();
+    private static List<Ticket> selectedTickets = new LinkedList<>();
 
+    public static List<Flight> getSelectedFlights() {
+        return selectedFlights;
+    }
     public static List<Passenger> getPassengers() {
         return passengers;
     }
     public static List<Flight> getFlights() {
         return flights;
     }
-    public static List<Ticket> getTickets() {
-        return tickets;
+    public static List<Passenger> getSelectedPassengers() {
+        return selectedPassengers;
+    }
+    public static List<Ticket> getSelectedTickets() {
+        return selectedTickets;
     }
 
-
     public static void main(String[] args) throws InterruptedException, SQLException, ClassNotFoundException {
-        DBLoading.loadFlights();
-        DBLoading.loadTickets();
-        DBLoading.loadPassengers();
-        TableMaker.loadingRowsForFlights();
-
         Thread gui = new Thread(new UserInerface());
         gui.start();
-
     }
 }

@@ -1,10 +1,5 @@
 package resorses;
 
-import BL.TableMaker;
-import DB.DBLoading;
-import GUI.Main;
-import net.miginfocom.swing.MigLayout;
-
 import javax.swing.*;
 import java.sql.SQLException;
 
@@ -15,7 +10,7 @@ public class TryGUI {
     public static void main(String[] args) throws SQLException, ClassNotFoundException {
         String[] cols = {"Name","Second Name"};
         String[][] rows = {{"Jon","Biba"},{"Juliya","Sex"}};
-        JFrame frame = new JFrame("Try GUI");
+        JFrame frame = new JFrame("Try user_interface");
         frame.setLocation(10,100);
         frame.setSize(300,300);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

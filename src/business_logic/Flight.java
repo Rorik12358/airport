@@ -1,4 +1,4 @@
-package BL;
+package business_logic;
 
 import java.util.Date;
 import java.util.LinkedList;

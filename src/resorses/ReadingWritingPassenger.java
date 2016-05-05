@@ -4,10 +4,7 @@ import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
+import java.sql.*;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Random;
@@ -19,6 +16,10 @@ import java.util.StringTokenizer;
 public class ReadingWritingPassenger {
     public static void main(String[] args) {
         try(BufferedReader reader = new BufferedReader(new FileReader("src/resorses/names"))) {
+            Class cls = Class.forName("org.h2.Driver");
+            Connection connection = DriverManager.getConnection("jdbc:h2:~/airportDataBase","sa","");
+            Statement statement = connection.createStatement();
+            statement.execute("DELETE FROM PASSENGERS");
             String line;
             SimpleDateFormat format = new SimpleDateFormat("dd.MM.yyyy");
             Random random = new Random();
@@ -30,12 +31,10 @@ public class ReadingWritingPassenger {
                 StringTokenizer tokenizer = new StringTokenizer(line);
                 String firstName = tokenizer.nextToken();
                 String secondName = tokenizer.nextToken();
-                Class cls = Class.forName("org.h2.Driver");
-                Connection connection = DriverManager.getConnection("jdbc:h2:~/airportDataBase","sa","");
-                PreparedStatement statement = connection.prepareStatement("INSERT INTO PASSENGERS VALUES(?,?,?,?,?,?,?,?)");
-                statement.setString(1,firstName);
-                statement.setString(2,secondName);
-                statement.setString(3,nationalities[nt]);
+                PreparedStatement prepareStatement = connection.prepareStatement("INSERT INTO PASSENGERS VALUES(?,?,?,?,?,?,?,?)");
+                prepareStatement.setString(1,firstName);
+                prepareStatement.setString(2,secondName);
+                prepareStatement.setString(3,nationalities[nt]);
                 if(nt < nationalities.length-1){
                     nt++;
                 } else {
@@ -45,11 +44,11 @@ public class ReadingWritingPassenger {
                 char ch2 = (char) (random.nextInt(15)+100);
                 StringBuilder pasp = new StringBuilder();
                 pasp.append(ch1).append(ch2).append(index);
-                statement.setString(4,pasp.toString().toUpperCase());
+                prepareStatement.setString(4,pasp.toString().toUpperCase());
                 java.sql.Date birthday = new java.sql.Date(random.nextLong()/10000000);
-                statement.setDate(5,birthday);
-                statement.setInt(6,random.nextInt(2)+1);
-                statement.setInt(7,random.nextInt(2)+1);
+                prepareStatement.setDate(5,birthday);
+                prepareStatement.setInt(6,random.nextInt(2)+1);
+                prepareStatement.setInt(7,random.nextInt(2)+1);
                 StringBuilder flight = new StringBuilder("#FLGHT");
                 flight.append(numberOfLight);
                 if(numberOfLight == 20){
@@ -57,13 +56,9 @@ public class ReadingWritingPassenger {
                 } else{
                     numberOfLight++;
                 }
-                statement.setString(8,flight.toString());
+                prepareStatement.setString(8,flight.toString());
                 index++;
-                statement.execute();
-
-
-
-
+                prepareStatement.execute();
             }
         } catch (FileNotFoundException e) {
             e.printStackTrace();
