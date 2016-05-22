@@ -13,9 +13,9 @@ import java.util.List;
  * Created by r2-d2 on 24.04.16.
  */
 public class DBLoading {
-    private static String addressDB = "jdbc:h2:~/airportDataBase";
-    private static String loginDB = "sa";
-    private static String passwordDB = "";
+    public final static String addressDB = "jdbc:h2:/home/r2-d2/java prog/airport/src/data_base/airportDataBase";
+    public final static String loginDB = "sa";
+    public final static String passwordDB = "";
     public final static SimpleDateFormat FORMAT = new SimpleDateFormat("dd.MM.yyyy");
     public final static SimpleDateFormat PRECISELLY_FORMAT = new SimpleDateFormat("dd.MM.yyyy 'at' HH:mm");
 

@@ -8,7 +8,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.SQLException;
-import java.util.Iterator;
+import java.util.*;
 
 /**
  * Created by r2-d2 on 25.04.16.
@@ -276,19 +276,18 @@ public class GUIObjectsMaker {
                 if(CheckingInputInformation.isPriceValid(businessPrice) && CheckingInputInformation.isPriceValid(economyPrice)){
                     double businessPriceDouble = Double.parseDouble(businessPrice);
                     double economyPriceDouble = Double.parseDouble(economyPrice);
-
-                    flight.getTickets().clear();
-
-
+                    java.util.List ticketList = new LinkedList<>();
                     Ticket businessTicket = new Ticket();
                     businessTicket.setTicketClass(TicketClass.BUSINESS);
                     businessTicket.setPrice(businessPriceDouble);
-                    flight.getTickets().add(businessTicket);
+                    ticketList.add(businessTicket);
 
                     Ticket economyTicket = new Ticket();
                     economyTicket.setTicketClass(TicketClass.ECONOMY);
                     economyTicket.setPrice(economyPriceDouble);
-                    flight.getTickets().add(economyTicket);
+                    ticketList.add(economyTicket);
+
+                    flight.setTickets(ticketList);
 
                     Main.getFlights().add(flight);
 
